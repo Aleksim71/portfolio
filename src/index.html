@@ -177,6 +177,12 @@
     color:var(--gold-bright);
     letter-spacing:.02em;
   }
+  .p-logo button{
+    display:block; padding:0; border:0; background:none; cursor:pointer;
+    border-radius:40%; transition:transform .25s ease, filter .25s ease;
+  }
+  .p-logo button:hover{ transform:translateY(-1px); filter:brightness(1.08); }
+  .p-logo button:focus-visible{ outline:1px solid var(--gold); outline-offset:4px; }
   .p-logo img{
     height:52px;
     width:auto;
@@ -276,8 +282,9 @@
   }
   .p-card p{ font-size:13px; line-height:1.6; color:var(--white); }
   .p-card .p-card-stack{ margin-top:14px; display:flex; flex-wrap:wrap; gap:6px; }
+  .p-card-links{ margin-top:14px; display:flex; flex-wrap:wrap; gap:6px 20px; }
   .p-card-link{
-    display:inline-block; margin-top:14px;
+    display:inline-block;
     font-size:12.5px; color:var(--gold-soft); text-decoration:none;
     border-bottom:1px solid var(--gold-dim);
   }
@@ -417,7 +424,7 @@
 
   <div id="portfolio-view">
     <header class="p-header">
-      <div class="p-logo"><img src="assets/logo.png" alt="Aleksim"></div>
+      <div class="p-logo"><button type="button" onclick="setMode('garden')" aria-label="Open the garden" title="Open the garden"><img src="assets/logo.png" alt="Aleksim"></button></div>
       <nav class="p-nav" aria-label="Main navigation">
         <a href="#about" data-i18n="nav_about">About</a>
         <a href="#projects" data-i18n="nav_projects">Projects</a>
@@ -468,8 +475,12 @@
           </div>
           <div class="card-view active" data-view="text">
             <span class="p-card-tag" data-i18n="tempasi_tag">fullstack · case study</span>
-            <p data-i18n="tempasi_desc">A marketplace for website templates with two access models: rent, or buy exclusively — each template can be sold only once. Sellers upload a ZIP through the Cabinet; the app validates it, extracts a preview for the catalog and serves a live demo from storage. Working end to end: registration with email verification, checkout → paid order → download entitlement.</p>
+            <p data-i18n="tempasi_desc">A marketplace for website templates with two access models: rent, or buy exclusively — each template can be sold only once, which the database enforces. Sellers upload a ZIP through the Cabinet; the app validates it, extracts a preview and serves the live demo from a separate origin. Payments run through a provider abstraction with idempotent webhooks, plus a credit ledger where credit reserved at checkout is released or consumed once the payment webhook confirms the outcome. 276 tests.</p>
             <div class="p-card-stack"><span>Node.js</span><span>Express</span><span>PostgreSQL</span></div>
+            <div class="p-card-links">
+              <a class="p-card-link" href="https://tempasi.web-globus.de/" target="_blank" rel="noopener" data-i18n="link_live">Live site</a>
+              <a class="p-card-link" href="https://github.com/Aleksim71/tempasi" target="_blank" rel="noopener" data-i18n="link_code">Source on GitHub</a>
+            </div>
           </div>
           <div class="card-view card-images" data-view="img">
             <img src="assets/tempasi-catalog.png" alt="Tempasi — public template catalog" onclick="openLightboxFromThumb(this)" tabindex="0" role="button" onkeydown="thumbKey(event, this)">
@@ -489,7 +500,9 @@
             <span class="p-card-tag" data-i18n="uri_tag">backend · systems design</span>
             <p data-i18n="uri_desc">A small automation engine that runs JSON-defined scenarios: an actor delegates each step to a handler, a critic turns the result into continue/terminate — nothing smarter than that on purpose. Triggers resolve through a cascade of registries; guards stop runaway scenarios, and every failure takes one path to an onError hook. Built on it: a watcher that polls the Freelancehunt API and notifies me via Telegram and email, with at-least-once delivery. Covered by 37 tests.</p>
             <div class="p-card-stack"><span>Node.js</span><span>ESM</span><span>node:test</span></div>
-            <a class="p-card-link" href="https://github.com/Aleksim71/uri" target="_blank" rel="noopener" data-i18n="link_code">Source on GitHub</a>
+            <div class="p-card-links">
+              <a class="p-card-link" href="https://github.com/Aleksim71/uri" target="_blank" rel="noopener" data-i18n="link_code">Source on GitHub</a>
+            </div>
           </div>
           <div class="card-view card-images" data-view="img">
             <svg viewBox="0 0 300 200" role="button" aria-label="Execution flow: act resolved through a cascade of registries to a handler" tabindex="0" onclick="openLightboxFromThumb(this)" onkeydown="thumbKey(event, this)">
@@ -562,6 +575,9 @@
             <span class="p-card-tag" data-i18n="site_tag">frontend · self-referential</span>
             <p data-i18n="site_desc">The site you're on right now. Vanilla JS, no framework: a custom mode-switcher between an atmosphere view and this portfolio, a hand-rolled EN/DE i18n layer, and an accessible lightbox with keyboard navigation and focus handling — all built from scratch.</p>
             <div class="p-card-stack"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+            <div class="p-card-links">
+              <a class="p-card-link" href="https://github.com/Aleksim71/portfolio" target="_blank" rel="noopener" data-i18n="link_code">Source on GitHub</a>
+            </div>
           </div>
           <div class="card-view card-images" data-view="img">
             <img src="assets/site-garden.jpg" alt="This site — atmosphere mode" onclick="openLightboxFromThumb(this)" tabindex="0" role="button" onkeydown="thumbKey(event, this)">
@@ -604,7 +620,7 @@
       projects_heading:"projects",
       tempasi_title:"Tempasi — Template Marketplace",
       tempasi_tag:"fullstack · case study",
-      tempasi_desc:"A marketplace for website templates with two access models: rent, or buy exclusively — each template can be sold only once. Sellers upload a ZIP through the Cabinet; the app validates it, extracts a preview for the catalog and serves a live demo from storage. Working end to end: registration with email verification, checkout → paid order → download entitlement.",
+      tempasi_desc:"A marketplace for website templates with two access models: rent, or buy exclusively — each template can be sold only once, which the database enforces. Sellers upload a ZIP through the Cabinet; the app validates it, extracts a preview and serves the live demo from a separate origin. Payments run through a provider abstraction with idempotent webhooks, plus a credit ledger where credit reserved at checkout is released or consumed once the payment webhook confirms the outcome. 276 tests.",
       site_title:"This Portfolio Site",
       site_tag:"frontend · self-referential",
       site_desc:"The site you're on right now. Vanilla JS, no framework: a custom mode-switcher between an atmosphere view and this portfolio, a hand-rolled EN/DE i18n layer, and an accessible lightbox with keyboard navigation and focus handling — all built from scratch.",
@@ -612,6 +628,7 @@
       uri_tag:"backend · systems design",
       uri_desc:"A small automation engine that runs JSON-defined scenarios: an actor delegates each step to a handler, a critic turns the result into continue/terminate — nothing smarter than that on purpose. Triggers resolve through a cascade of registries; guards stop runaway scenarios, and every failure takes one path to an onError hook. Built on it: a watcher that polls the Freelancehunt API and notifies me via Telegram and email, with at-least-once delivery. Covered by 37 tests.",
       link_code:"Source on GitHub",
+      link_live:"Live site",
       garden_caption:"A time to gather stones…",
       garden_hint:"click the image — the next one appears",
       mode_garden_label:"Mode: garden", mode_portfolio_label:"Mode: portfolio",
@@ -632,7 +649,7 @@
       projects_heading:"projekte",
       tempasi_title:"Tempasi — Vorlagen-Marktplatz",
       tempasi_tag:"fullstack · fallstudie",
-      tempasi_desc:"Ein Marktplatz für Website-Vorlagen mit zwei Zugriffsmodellen: Miete oder exklusiver Kauf — jede Vorlage wird nur ein einziges Mal verkauft. Verkäufer laden ein ZIP über das Cabinet hoch; die App prüft es, extrahiert eine Vorschau für den Katalog und liefert eine Live-Demo direkt aus dem Speicher. Durchgängig funktionsfähig: Registrierung mit E-Mail-Bestätigung, Checkout → bezahlte Bestellung → Download-Berechtigung.",
+      tempasi_desc:"Ein Marktplatz für Website-Vorlagen mit zwei Zugriffsmodellen: Miete oder exklusiver Kauf — jede Vorlage wird nur ein einziges Mal verkauft, abgesichert durch die Datenbank. Verkäufer laden ein ZIP über das Cabinet hoch; die App prüft es, extrahiert eine Vorschau und liefert die Live-Demo von einem separaten Origin. Zahlungen laufen über eine Provider-Abstraktion mit idempotenten Webhooks, dazu ein Guthaben-Ledger: beim Checkout reserviertes Guthaben wird freigegeben oder verbraucht, sobald der Zahlungs-Webhook das Ergebnis bestätigt. 276 Tests.",
       site_title:"Diese Portfolio-Seite",
       site_tag:"frontend · selbstreferenziell",
       site_desc:"Die Seite, auf der Sie sich gerade befinden. Vanilla JS, ohne Framework: ein selbstgebauter Modus-Umschalter zwischen der Atmosphäre-Ansicht und diesem Portfolio, eine handgeschriebene EN/DE-i18n-Schicht sowie eine barrierefreie Lightbox mit Tastaturnavigation und Fokus-Handling — alles von Grund auf selbst entwickelt.",
@@ -640,6 +657,7 @@
       uri_tag:"backend · systemdesign",
       uri_desc:"Eine kleine Automatisierungs-Engine, die JSON-definierte Szenarien ausführt: ein Actor delegiert jeden Schritt an einen Handler, ein Critic übersetzt das Ergebnis bewusst simpel in continue/terminate. Trigger werden über eine Kaskade von Registries aufgelöst; Schutzmechanismen stoppen außer Kontrolle geratene Szenarien, und jeder Fehler läuft über einen einzigen Pfad zum onError-Hook. Darauf aufgebaut: ein Watcher, der die Freelancehunt-API abfragt und mich per Telegram und E-Mail benachrichtigt — mit At-least-once-Zustellung. Abgedeckt durch 37 Tests.",
       link_code:"Quellcode auf GitHub",
+      link_live:"Live-Website",
       garden_caption:"Zeit fürs Steinesammeln…",
       garden_hint:"Bild anklicken — das nächste erscheint",
       mode_garden_label:"Modus: Garten", mode_portfolio_label:"Modus: Portfolio",
